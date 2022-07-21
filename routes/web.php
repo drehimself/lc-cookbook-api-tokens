@@ -59,6 +59,32 @@ Route::delete('/repos/{repo}', function (Repo $repo) {
     return redirect('/my-repos')->with('success_message', 'Repo was deleted!');
 })->middleware('auth');
 
+Route::get('/personal-access-tokens', function () {
+    return view('personal-access-tokens');
+})->middleware('auth');
+
+Route::post('/personal-access-tokens', function (Request $request) {
+    $request->validate([
+        'token_name' => 'required',
+    ]);
+
+    $abilities = [];
+
+    if ($request->create) {
+        array_push($abilities, 'create');
+    }
+
+    if ($request->delete) {
+        array_push($abilities, 'delete');
+    }
+
+    $token = $request->user()->createToken($request->token_name, $abilities);
+
+    return back()->with('success_message', 'Token was created, make sure to copy this: '.$token->plainTextToken);
+})->middleware('auth');
+
+
+
 
 
 require __DIR__.'/auth.php';

@@ -19,6 +19,7 @@
         @auth
             <a href="/my-repos" class="hover:text-gray-200">My Repos</a>
             <a href="/repos/create" class="hover:text-gray-200">Create Repo</a>
+            <a href="/personal-access-tokens" class="hover:text-gray-200">Personal Access Tokens</a>
         @endauth
         @guest
             <a href="{{ route('login') }}">Log in</a>
